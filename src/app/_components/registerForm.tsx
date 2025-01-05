@@ -8,6 +8,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import { RegisterFormData, registerSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +30,7 @@ export default function RegisterForm(){
     defaultValues: {
       name: '',
       email: '',
+      role: 'user',
       password: ''
     }
   })
@@ -73,6 +81,25 @@ export default function RegisterForm(){
               <FormMessage />
             </FormItem>
           )} />
+          <FormField control={form.control} name="role" render={({field}) => (
+            <FormItem>
+              <FormLabel>Função</FormLabel>
+              <Select onValueChange={field.onChange} required>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecione a função do usuário" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="user">User</SelectItem>
+                  <SelectItem value="admin">admin</SelectItem>
+                  <SelectItem value="superAdmin">super admin</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )} />
+
           <FormField control={form.control} name="password" render={({field}) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
