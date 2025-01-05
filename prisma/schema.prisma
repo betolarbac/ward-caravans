@@ -16,8 +16,8 @@ datasource db {
 model User {
   id       String  @id @unique @default(cuid())
   name     String?
-  email    String?
-  password String?
+  email    String @unique
+  password String
   nrm      String?
   role     String  @default("user")
   wardId   String?
