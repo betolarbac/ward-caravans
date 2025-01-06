@@ -15,11 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
-  // const route = useRouter();
+  const route = useRouter();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
@@ -42,6 +42,8 @@ export default function LoginForm() {
         alert(result.error);
         return;
       }
+
+      route.push("/dashboard");
     } catch (error) {
       alert(error || "Ocorreu um erro ao fazer login");
     } finally {
