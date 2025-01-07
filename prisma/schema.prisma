@@ -27,6 +27,6 @@ model User {
 model Ward {
   id        String    @id @unique @default(cuid())
   name      String?
-  createdAt DateTime?
+  createdAt DateTime @default(now())
   users     User[]
 }
