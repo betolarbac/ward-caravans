@@ -1,6 +1,6 @@
 "use client";
 
-import { Bus, BusFront, LogOut, User } from "lucide-react";
+import { Bus, BusFront, LogOut, School, User } from "lucide-react";
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
@@ -44,8 +44,9 @@ export function Sidebar({ user }: SidebarProps) {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
-                "hover:bg-primary hover:text-primary-foreground",)}>
-              <a href="/dashboard/reports" className="flex items-center">
+                "hover:bg-primary hover:text-primary-foreground",
+                pathName === "/ward-caravans" && "bg-primary text-primary-foreground")}>
+              <a href="/dashboard/ward-caravans" className="flex items-center">
                 <BusFront className="mr-2 h-4 w-4" />
                 <span>Caravanas da Ala</span>
               </a>
@@ -53,8 +54,19 @@ export function Sidebar({ user }: SidebarProps) {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
-                "hover:bg-primary hover:text-primary-foreground",)}>
-              <a href="/dashboard/reports" className="flex items-center">
+                "hover:bg-primary hover:text-primary-foreground",
+                pathName === "/dashboard/ward" && "bg-primary text-primary-foreground")}>
+              <a href="/dashboard/ward" className="flex items-center">
+                <School className="mr-2 h-4 w-4" />
+                <span>Alas</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild className={cn("w-full justify-start",
+                "hover:bg-primary hover:text-primary-foreground",
+                pathName === "/dashboard/user" && "bg-primary text-primary-foreground")}>
+              <a href="/dashboard/user" className="flex items-center">
                 <User className="mr-2 h-4 w-4" />
                 <span>Usuários</span>
               </a>
