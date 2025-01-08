@@ -16,7 +16,7 @@ datasource db {
 model User {
   id       String  @id @unique @default(cuid())
   name     String?
-  email    String @unique
+  email    String  @unique
   password String
   nrm      String?
   role     String  @default("user")
@@ -25,8 +25,18 @@ model User {
 }
 
 model Ward {
-  id        String    @id @unique @default(cuid())
+  id        String     @id @unique @default(cuid())
   name      String?
-  createdAt DateTime @default(now())
+  createdAt DateTime   @default(now())
   users     User[]
+  Caravans  Caravans[]
+}
+
+model Caravans {
+  id      String    @id @unique @default(cuid())
+  name    String?
+  date    DateTime?
+  vacancy Int?
+  wardId  String
+  ward    Ward?     @relation(fields: [wardId], references: [id])
 }
