@@ -5,6 +5,7 @@ export const registerSchema = z.object({
   password: z.string().min(6),
   name: z.string().optional(),
   role: z.string(),
+  wardId: z.string()
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
