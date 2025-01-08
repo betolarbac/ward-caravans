@@ -1,10 +1,10 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PropsWithChildren } from "react";
 import { Sidebar } from "./_components/sidebar/sidebar";
-import { getUser } from "./action";
+import { getSession } from "./action";
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const session = await getUser()
+  const session = await getSession()
   
   return (
     <SidebarProvider>
