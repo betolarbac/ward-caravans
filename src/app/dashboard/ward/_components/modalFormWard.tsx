@@ -27,6 +27,7 @@ import { Loader } from "lucide-react";
 
 export default function ModalFormWard() {
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const form = useForm<wardData>({
     resolver: zodResolver(wardSchema),
     defaultValues: {
@@ -46,7 +47,7 @@ export default function ModalFormWard() {
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>Adicionar nova ala</Button>
       </DialogTrigger>
