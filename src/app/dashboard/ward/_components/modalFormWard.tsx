@@ -24,10 +24,13 @@ import { upsertWards } from "../action";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ModalFormWard() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const router = useRouter()
+
   const form = useForm<wardData>({
     resolver: zodResolver(wardSchema),
     defaultValues: {
@@ -39,10 +42,14 @@ export default function ModalFormWard() {
     setLoading(true);
     try {
       await upsertWards(data);
+
+      router.refresh()
+      form.reset()
     } catch (error) {
       console.error(error || "Error inesperado");
     } finally {
       setLoading(false);
+      setOpen(false)
     }
   }
 
