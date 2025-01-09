@@ -10,6 +10,7 @@ import {
 import Header from "../_components/header";
 import Link from "next/link";
 import { getWardCaravans } from "./actions";
+import RegisterCaravans from "./_components/RegisterCaravans";
 
 
 export default async function WardCaravans() {
@@ -20,6 +21,7 @@ export default async function WardCaravans() {
     <div className="max-w-[1200px] mx-auto">
       <div className="flex justify-between">
         <Header title="Caravanas da Ala" />
+        <RegisterCaravans />
       </div>
 
       <Card>
