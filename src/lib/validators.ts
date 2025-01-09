@@ -5,7 +5,7 @@ export const registerSchema = z.object({
   password: z.string().min(6),
   name: z.string().optional(),
   role: z.string(),
-  wardId: z.string()
+  wardId: z.string(),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;
@@ -19,10 +19,20 @@ export const LoginSchema = z.object({
 
 export type LoginFormData = z.infer<typeof LoginSchema>;
 
-
 export const wardSchema = z.object({
   id: z.string().optional(),
-  name: z.string()
-})
+  name: z.string(),
+});
 
-export type wardData = z.infer<typeof wardSchema>
+export type wardData = z.infer<typeof wardSchema>;
+
+export const CaravansWardSchema = z.object({
+  id: z.string().optional(),
+  name: z.string(),
+  date: z.date().min(new Date()),
+  vacancy: z.number(),
+  active: z.boolean().default(true),
+  wardId: z.string(),
+});
+
+export type CaravansWardProps = z.infer<typeof CaravansWardSchema>;
