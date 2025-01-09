@@ -45,7 +45,7 @@ export function Sidebar({ user }: SidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
                 "hover:bg-primary hover:text-primary-foreground",
-                pathName === "/ward-caravans" && "bg-primary text-primary-foreground")}>
+                pathName === "/dashboard/ward-caravans" && "bg-primary text-primary-foreground")}>
               <a href="/dashboard/ward-caravans" className="flex items-center">
                 <BusFront className="mr-2 h-4 w-4" />
                 <span>Caravanas da Ala</span>
