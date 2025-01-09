@@ -29,8 +29,8 @@ export default async function User() {
             <TableHeader>
               <TableRow>
                 <TableHead>Nome</TableHead>
-                <TableHead>Ala</TableHead>
                 <TableHead>Email</TableHead>
+                <TableHead>Ala</TableHead>
                 <TableHead>Função</TableHead>
                 <TableHead>Deletar</TableHead>
                 <TableHead>Editar</TableHead>
