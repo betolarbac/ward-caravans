@@ -1,4 +1,6 @@
+"use server"
 import prisma from "@/lib/prisma";
+import { CaravansWardProps } from "@/lib/validators";
 
 export async function getWardCaravans(){
   const wardCaravans = await prisma.caravans.findMany({
@@ -24,4 +26,38 @@ export async function getWardCaravans(){
   })
 
   return wardCaravans
+}
+
+export async function upsertWardCaravans(data: CaravansWardProps){
+  if(!data.id) {
+    return await prisma.caravans.create({
+      data: {
+        name: data.name,
+        date: data.date,
+        vacancy: data.vacancy,
+        active: data.active,
+        wardId: data.wardId
+      }
+    })
+  }
+
+  return await prisma.caravans.upsert({
+    where: {
+      id: data.id
+    },
+    update: {
+      name: data.name,
+      date: data.date,
+      vacancy: data.vacancy,
+      active: data.active,
+      wardId: data.wardId
+    },
+    create: {
+      name: data.name,
+      date: data.date,
+      vacancy: data.vacancy,
+      active: data.active,
+      wardId: data.wardId
+    }
+  })
 }
