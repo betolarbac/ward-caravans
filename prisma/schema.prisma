@@ -37,6 +37,18 @@ model Caravans {
   name    String?
   date    DateTime?
   vacancy Int?
+  active  Boolean   @default(true)
   wardId  String
   ward    Ward?     @relation(fields: [wardId], references: [id])
+  Member  Member[]
+}
+
+model Member {
+  id         String    @id @unique @default(cuid())
+  name       String?
+  cpf        String    @unique
+  ward       String
+  pay        Boolean   @default(false)
+  caravansId String
+  caravans   Caravans? @relation(fields: [caravansId], references: [id])
 }
