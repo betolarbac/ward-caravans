@@ -42,7 +42,14 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {caravansMember?.Member.map((caravans) => (
+              {caravansMember?.Member.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="h-24 text-center">
+                    Nenhum membro Cadastrado.
+                  </TableCell>
+                </TableRow>	
+              ) : (
+              caravansMember?.Member.map((caravans) => (
                 <TableRow key={caravans.id}>
                   <TableCell className="font-medium py-4">
                     {caravans.name}
@@ -53,7 +60,8 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
                   <TableCell>Deletar</TableCell>
                   <TableCell>Editar</TableCell>
                 </TableRow>
-              ))}
+              ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
