@@ -10,6 +10,7 @@ import {
 import Header from "../../_components/header";
 import { GetCaravansPage } from "./action";
 import MemberCaravans from "./_components/MemberCaravans";
+import formatCPF from "./_components/formatCpf";
 
 interface CaravanPageProps {
   params: {
@@ -47,20 +48,26 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
                   <TableCell colSpan={6} className="h-24 text-center">
                     Nenhum membro Cadastrado.
                   </TableCell>
-                </TableRow>	
-              ) : (
-              caravansMember?.Member.map((caravans) => (
-                <TableRow key={caravans.id}>
-                  <TableCell className="font-medium py-4">
-                    {caravans.name}
-                  </TableCell>
-                  <TableCell>{caravans.ward}</TableCell>
-                  <TableCell>{caravans.cpf}</TableCell>
-                  <TableCell>{caravans.pay.toString()}</TableCell>
-                  <TableCell>Deletar</TableCell>
-                  <TableCell>Editar</TableCell>
                 </TableRow>
-              ))
+              ) : (
+                caravansMember?.Member.map((caravans) => (
+                  <TableRow key={caravans.id}>
+                    <TableCell className="font-medium py-4">
+                      {caravans.name}
+                    </TableCell>
+                    <TableCell>{caravans.ward}</TableCell>
+                    <TableCell>{formatCPF(caravans.cpf)}</TableCell>
+                    <TableCell>
+                      {caravans.pay === true ? (
+                        <span className="text-green-500">Pago</span>
+                      ) : (
+                        <span className="text-red-500">Não</span>
+                      )}
+                    </TableCell>
+                    <TableCell>Deletar</TableCell>
+                    <TableCell>Editar</TableCell>
+                  </TableRow>
+                ))
               )}
             </TableBody>
           </Table>
