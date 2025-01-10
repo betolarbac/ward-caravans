@@ -35,24 +35,32 @@ export default async function Ward() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {ward.map((ward) => (
-                <TableRow className="" key={ward.id}>
-                  <TableCell className="font-medium py-4">
-                    {ward.name}
-                  </TableCell>
-                  <TableCell>Estaca 1</TableCell>
-                  <TableCell>
-                    <Button variant="ghost">
-                      <Trash2 className="w-4 h-4 text-red-600" />
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost">
-                      <Pencil className="w-4 h-4" />
-                    </Button>
+              {ward.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="h-24 text-center">
+                    Nenhuma Ala cadastrada.
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                ward.map((ward) => (
+                  <TableRow className="" key={ward.id}>
+                    <TableCell className="font-medium py-4">
+                      {ward.name}
+                    </TableCell>
+                    <TableCell>Estaca 1</TableCell>
+                    <TableCell>
+                      <Button variant="ghost">
+                        <Trash2 className="w-4 h-4 text-red-600" />
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost">
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
