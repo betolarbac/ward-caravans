@@ -41,7 +41,7 @@ export default async function WardCaravans() {
               {caravansWard.map((caravans) => (
                 <TableRow key={caravans.id}>
                   <TableCell className="font-medium py-4">
-                    <Link href={caravans.id}>{caravans.name}</Link>
+                    <Link href={`/dashboard/ward-caravans/${caravans.id}`}>{caravans.name}</Link>
                   </TableCell>
                   <TableCell>{caravans.ward?.name}</TableCell>
                   <TableCell>
