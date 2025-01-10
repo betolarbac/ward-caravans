@@ -36,3 +36,14 @@ export const CaravansWardSchema = z.object({
 });
 
 export type CaravansWardProps = z.infer<typeof CaravansWardSchema>;
+
+export const CaravansMemberSchema = z.object({
+  id: z.string().optional(),
+  name: z.string(),
+  cpf: z.string(),
+  ward: z.string(),
+  pay: z.boolean().default(false),
+  caravansId: z.string(),
+});
+
+export type CaravansMemberProps = z.infer<typeof CaravansMemberSchema>;
