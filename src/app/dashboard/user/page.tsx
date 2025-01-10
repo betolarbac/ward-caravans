@@ -16,7 +16,6 @@ import { GetUser } from "./actions";
 export default async function User() {
   const users = await GetUser();
 
-
   return (
     <div className="max-w-[1200px] mx-auto">
       <div className="flex justify-between">
@@ -37,26 +36,34 @@ export default async function User() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {users.map((user) => (
-                <TableRow className="" key={user.id}>
-                  <TableCell className="font-medium py-4">
-                    {user.name}
-                  </TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.ward?.name}</TableCell>
-                  <TableCell>{user.role}</TableCell>
-                  <TableCell>
-                    <Button variant="ghost">
-                      <Trash2 className="w-4 h-4 text-red-600" />
-                    </Button>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost">
-                      <Pencil className="w-4 h-4" />
-                    </Button>
+              {users.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="h-24 text-center">
+                    Nenhum membro Cadastrado.
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                users.map((user) => (
+                  <TableRow className="" key={user.id}>
+                    <TableCell className="font-medium py-4">
+                      {user.name}
+                    </TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.ward?.name}</TableCell>
+                    <TableCell>{user.role}</TableCell>
+                    <TableCell>
+                      <Button variant="ghost">
+                        <Trash2 className="w-4 h-4 text-red-600" />
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost">
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
