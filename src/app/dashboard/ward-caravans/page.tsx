@@ -38,19 +38,28 @@ export default async function WardCaravans() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {caravansWard.map((caravans) => (
-                <TableRow key={caravans.id}>
-                  <TableCell className="font-medium py-4">
-                    <Link href={`/dashboard/ward-caravans/${caravans.id}`}>{caravans.name}</Link>
+              {caravansWard.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="h-24 text-center">
+                    Nenhuma caravana cadastrada.
                   </TableCell>
-                  <TableCell>{caravans.ward?.name}</TableCell>
-                  <TableCell>
-                    {caravans.date?.toLocaleDateString("pt-BR")}
-                  </TableCell>
-                  <TableCell>{caravans.Member.length}/{caravans.vacancy}</TableCell>
-                  <TableCell>{caravans.active.toString()}</TableCell>
                 </TableRow>
-              ))}
+              ): (
+
+                caravansWard.map((caravans) => (
+                  <TableRow key={caravans.id}>
+                    <TableCell className="font-medium py-4">
+                      <Link href={`/dashboard/ward-caravans/${caravans.id}`}>{caravans.name}</Link>
+                    </TableCell>
+                    <TableCell>{caravans.ward?.name}</TableCell>
+                    <TableCell>
+                      {caravans.date?.toLocaleDateString("pt-BR")}
+                    </TableCell>
+                    <TableCell>{caravans.Member.length}/{caravans.vacancy}</TableCell>
+                    <TableCell>{caravans.active.toString()}</TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </CardContent>
