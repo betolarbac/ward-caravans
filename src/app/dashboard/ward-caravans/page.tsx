@@ -13,6 +13,7 @@ import { getWardCaravans } from "./actions";
 import RegisterCaravans from "./_components/RegisterCaravans";
 
 import CaravansDelete from "./_components/DeleteCaravans";
+import EditCaravans from "./_components/EditCaravans";
 
 export default async function WardCaravans() {
   const caravansWard = await getWardCaravans();
@@ -35,6 +36,7 @@ export default async function WardCaravans() {
                 <TableHead>Vagas</TableHead>
                 <TableHead>Ativar/Desativar</TableHead>
                 <TableHead>Deletar</TableHead>
+                <TableHead>Editar</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -64,6 +66,16 @@ export default async function WardCaravans() {
                       <CaravansDelete
                         idCaravans={caravans.id}
                         name={caravans.name ?? ""}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <EditCaravans
+                        name={caravans.name ?? ""}
+                        date={caravans.date ?? new Date()}
+                        vacancy={caravans.vacancy ?? 0}
+                        active={caravans.active}
+                        wardId={caravans.ward?.id ?? ""}
+                        id={caravans.id}
                       />
                     </TableCell>
                   </TableRow>
