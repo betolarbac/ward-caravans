@@ -12,10 +12,10 @@ import Link from "next/link";
 import { getWardCaravans } from "./actions";
 import RegisterCaravans from "./_components/RegisterCaravans";
 
+import CaravansDelete from "./_components/DeleteCaravans";
 
 export default async function WardCaravans() {
-
-  const caravansWard = await getWardCaravans()
+  const caravansWard = await getWardCaravans();
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -44,19 +44,28 @@ export default async function WardCaravans() {
                     Nenhuma caravana cadastrada.
                   </TableCell>
                 </TableRow>
-              ): (
-
+              ) : (
                 caravansWard.map((caravans) => (
                   <TableRow key={caravans.id}>
                     <TableCell className="font-medium py-4">
-                      <Link href={`/dashboard/ward-caravans/${caravans.id}`}>{caravans.name}</Link>
+                      <Link href={`/dashboard/ward-caravans/${caravans.id}`}>
+                        {caravans.name}
+                      </Link>
                     </TableCell>
                     <TableCell>{caravans.ward?.name}</TableCell>
                     <TableCell>
                       {caravans.date?.toLocaleDateString("pt-BR")}
                     </TableCell>
-                    <TableCell>{caravans.Member.length}/{caravans.vacancy}</TableCell>
+                    <TableCell>
+                      {caravans.Member.length}/{caravans.vacancy}
+                    </TableCell>
                     <TableCell>{caravans.active.toString()}</TableCell>
+                    <TableCell>
+                      <CaravansDelete
+                        idCaravans={caravans.id}
+                        name={caravans.name ?? ""}
+                      />
+                    </TableCell>
                   </TableRow>
                 ))
               )}

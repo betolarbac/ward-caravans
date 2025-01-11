@@ -61,3 +61,15 @@ export async function upsertWardCaravans(data: CaravansWardProps){
     }
   })
 }
+
+export async function DeleteCaravans(id: string) {
+
+  await prisma.member.deleteMany({
+    where: {caravansId: id}
+  })
+
+
+  return await prisma.caravans.delete({
+    where: {id: id}
+  })
+}
