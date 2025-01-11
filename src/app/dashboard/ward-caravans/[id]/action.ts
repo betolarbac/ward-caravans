@@ -47,3 +47,10 @@ export async function UpsertCaravansMember(data: CaravansMemberProps) {
     }
   })
 }
+
+export async function DeleteCaravansMember(id: string) {
+
+  return await prisma.member.delete({
+    where: {id: id}
+  })
+}
