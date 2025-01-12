@@ -79,7 +79,7 @@ export default function ModalFormWard() {
                   <FormItem>
                     <FormLabel>Nome</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input {...field} required/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
