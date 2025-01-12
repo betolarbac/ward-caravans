@@ -8,10 +8,11 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { Trash2, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import Header from "../_components/header";
 import RegisterForm from "./_components/RegisterForm";
 import { GetUser } from "./actions";
+import DeleteModalUser from "./_components/DeleteModalUser";
 
 export default async function User() {
   const users = await GetUser();
@@ -52,9 +53,7 @@ export default async function User() {
                     <TableCell>{user.ward?.name}</TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>
-                      <Button variant="ghost">
-                        <Trash2 className="w-4 h-4 text-red-600" />
-                      </Button>
+                     <DeleteModalUser idUser={user.id} name={user.name ?? ""} />
                     </TableCell>
                     <TableCell>
                       <Button variant="ghost">

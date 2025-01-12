@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import prisma from "@/lib/prisma";
 
 export async function GetUser() {
@@ -10,12 +10,18 @@ export async function GetUser() {
       role: true,
       ward: {
         select: {
-          name: true
-        }
-      }
+          name: true,
+        },
+      },
     },
-    orderBy: {name: 'asc'}
-  })
+    orderBy: { name: "asc" },
+  });
 
-  return user
+  return user;
+}
+
+export async function DeleteUser(id: string) {
+  return await prisma.user.delete({
+    where: { id: id },
+  });
 }
