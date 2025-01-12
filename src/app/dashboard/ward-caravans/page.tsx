@@ -61,7 +61,7 @@ export default async function WardCaravans() {
                     <TableCell>
                       {caravans.Member.length}/{caravans.vacancy}
                     </TableCell>
-                    <TableCell>{caravans.active.toString()}</TableCell>
+                    <TableCell>{caravans.active === true ? "Ativa" : "Desativada" }</TableCell>
                     <TableCell>
                       <CaravansDelete
                         idCaravans={caravans.id}
