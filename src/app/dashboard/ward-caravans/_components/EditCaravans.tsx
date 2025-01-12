@@ -65,7 +65,6 @@ export default function EditCaravans(caravans: CaravansWardProps) {
     setLoading(true);
 
     try {
-      console.log("beto", data)
       await upsertWardCaravans(data);
       router.refresh();
       form.reset();
