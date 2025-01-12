@@ -85,13 +85,13 @@ export default function MemberCaravans({ id }: CaravansId) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Adicionar nova Caravana</Button>
+        <Button>Adicionar Novo Membro</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[360px]">
         <DialogHeader>
-          <DialogTitle>Caravana</DialogTitle>
+          <DialogTitle>Membro da caravana</DialogTitle>
           <DialogDescription>
-            Faça o cadastro de uma nova Caravana
+            Faça o cadastro de uma novo membro para essa caravana
           </DialogDescription>
         </DialogHeader>
 
