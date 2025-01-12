@@ -35,19 +35,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CaravansWardSchema, CaravansWardProps } from "@/lib/validators";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { upsertWardCaravans } from "../actions";
 import { useRouter } from "next/navigation";
 
-
 export default function EditCaravans(caravans: CaravansWardProps) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const router = useRouter();
-  
 
   const form = useForm({
     resolver: zodResolver(CaravansWardSchema),
@@ -76,6 +74,16 @@ export default function EditCaravans(caravans: CaravansWardProps) {
     }
   }
 
+  useEffect(() => {
+    form.reset({
+      id: caravans.id,
+      name: caravans.name,
+      date: caravans.date,
+      vacancy: caravans.vacancy,
+      active: caravans.active,
+      wardId: caravans.wardId,
+    });
+  }, [form, caravans]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
