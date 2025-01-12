@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader } from "lucide-react";
 import { getWards } from "../../ward/action";
+import { useRouter } from "next/navigation";
 interface Ward {
   id: string;
   name: string | null;
@@ -40,6 +41,7 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [wards, setWards] = useState<Ward[]>([]);
+  const router = useRouter();
 
   const form = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
@@ -80,6 +82,7 @@ export default function RegisterForm() {
       }
 
       form.reset();
+      router.refresh();
     } catch (error) {
       console.error(error || "Error inesperado");
     } finally {
