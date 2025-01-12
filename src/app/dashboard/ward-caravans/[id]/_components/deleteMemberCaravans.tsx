@@ -37,7 +37,7 @@ export default function CaravansMemberDelete({
   };
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant="ghost">
           <Trash2 className="w-4 h-4 text-red-600" />
         </Button>
