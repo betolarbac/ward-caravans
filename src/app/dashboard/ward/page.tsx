@@ -10,8 +10,9 @@ import Header from "../_components/header";
 import { Card, CardContent } from "@/components/ui/card";
 import ModalFormWard from "./_components/modalFormWard";
 import { getWards } from "./action";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import DeleteModalWard from "./_components/deleteModalWard";
 
 export default async function Ward() {
   const ward = await getWards();
@@ -49,9 +50,7 @@ export default async function Ward() {
                     </TableCell>
                     <TableCell>Estaca 1</TableCell>
                     <TableCell>
-                      <Button variant="ghost">
-                        <Trash2 className="w-4 h-4 text-red-600" />
-                      </Button>
+                     <DeleteModalWard idWards={ward.id} name={ward.name ?? ""} />
                     </TableCell>
                     <TableCell>
                       <Button variant="ghost">

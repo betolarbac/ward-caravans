@@ -35,3 +35,9 @@ export async function upsertWards(data: wardData) {
 
  
 }
+
+export async function DeleteWards(id: string) {
+  return await prisma.ward.delete({
+    where: {id: id}
+  })
+}
