@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
@@ -8,11 +7,11 @@ import {
   TableBody,
   TableCell,
 } from "@/components/ui/table";
-import { Pencil } from "lucide-react";
 import Header from "../_components/header";
 import RegisterForm from "./_components/RegisterForm";
 import { GetUser } from "./actions";
 import DeleteModalUser from "./_components/DeleteModalUser";
+import EditModalUser from "./_components/EditModalUser";
 
 export default async function User() {
   const users = await GetUser();
@@ -56,9 +55,7 @@ export default async function User() {
                      <DeleteModalUser idUser={user.id} name={user.name ?? ""} />
                     </TableCell>
                     <TableCell>
-                      <Button variant="ghost">
-                        <Pencil className="w-4 h-4" />
-                      </Button>
+                    <EditModalUser name={user.name ?? ""} email={user.email} role={user.role} password="" wardId="" />
                     </TableCell>
                   </TableRow>
                 ))
