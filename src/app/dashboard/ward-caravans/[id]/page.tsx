@@ -12,6 +12,7 @@ import { GetCaravansPage } from "./action";
 import MemberCaravans from "./_components/MemberCaravans";
 import formatCPF from "./_components/formatCpf";
 import CaravansMemberDelete from "./_components/deleteMemberCaravans";
+import EditMemberCaravans from "./_components/EditMemberCaravans";
 
 interface CaravanPageProps {
   params: {
@@ -65,8 +66,22 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
                         <span className="text-red-500">Não</span>
                       )}
                     </TableCell>
-                    <TableCell><CaravansMemberDelete idMemberCaravans={caravans.id} name={caravans.name || ""} /></TableCell>
-                    <TableCell>Editar</TableCell>
+                    <TableCell>
+                      <CaravansMemberDelete
+                        idMemberCaravans={caravans.id}
+                        name={caravans.name || ""}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <EditMemberCaravans
+                        id={caravans.id}
+                        caravansId={id}
+                        name={caravans.name ?? ""}
+                        ward={caravans.ward}
+                        cpf={caravans.cpf}
+                        pay={caravans.pay}
+                      />
+                    </TableCell>
                   </TableRow>
                 ))
               )}
