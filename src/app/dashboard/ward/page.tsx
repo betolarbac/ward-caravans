@@ -47,12 +47,12 @@ export default async function Ward() {
                     <TableCell className="font-medium py-4">
                       {ward.name}
                     </TableCell>
-                    <TableCell>Estaca 1</TableCell>
+                    <TableCell>{ward.stake?.name}</TableCell>
                     <TableCell>
                      <DeleteModalWard idWards={ward.id} name={ward.name ?? ""} />
                     </TableCell>
                     <TableCell>
-                     <EditModalWard name={ward.name ?? ""} id={ward.id} />
+                     <EditModalWard name={ward.name ?? ""} id={ward.id} stakeId="" />
                     </TableCell>
                   </TableRow>
                 ))

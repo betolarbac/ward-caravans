@@ -17,24 +17,39 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { wardData, wardSchema } from "@/lib/validators";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { upsertWards } from "../action";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { GetStake } from "../../stake/actions";
+
+interface stakeProps {
+  id: string;
+  name: string;
+}
 
 export default function ModalFormWard() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const router = useRouter()
+  const [stake, setStake] = useState<stakeProps[]>([]);
+  const router = useRouter();
 
   const form = useForm<wardData>({
     resolver: zodResolver(wardSchema),
     defaultValues: {
       name: "",
+      stakeId: "",
     },
   });
 
@@ -43,15 +58,33 @@ export default function ModalFormWard() {
     try {
       await upsertWards(data);
 
-      router.refresh()
-      form.reset()
+      router.refresh();
+      form.reset();
     } catch (error) {
       console.error(error || "Error inesperado");
     } finally {
       setLoading(false);
-      setOpen(false)
+      setOpen(false);
     }
   }
+
+  useEffect(() => {
+    async function GetStakeWard() {
+      try {
+        const stake = await GetStake();
+        if (!stake) {
+          throw new Error("GetStake returned null");
+        }
+        setStake(stake);
+        return stake;
+      } catch (error) {
+        console.error(error || "Erro inesperado");
+        return [];
+      }
+    }
+
+    GetStakeWard();
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -79,8 +112,32 @@ export default function ModalFormWard() {
                   <FormItem>
                     <FormLabel>Nome</FormLabel>
                     <FormControl>
-                      <Input {...field} required/>
+                      <Input {...field} required />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="stakeId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Ala</FormLabel>
+                    <Select onValueChange={field.onChange} required>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione a função do usuário" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {stake.map((item) => (
+                          <SelectItem key={item.id} value={item.id}>
+                            {item.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

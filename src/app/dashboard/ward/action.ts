@@ -4,6 +4,15 @@ import { wardData } from "@/lib/validators";
 
 export async function getWards() {
   const wards = await prisma.ward.findMany({
+    select: {
+      id: true,
+      name: true,
+      stake: {
+        select: {
+          name: true
+        }
+      }
+    },
     orderBy: { createdAt: 'desc' }
   })
 
@@ -15,11 +24,11 @@ export async function upsertWards(data: wardData) {
   if(!data.id) {
     return await prisma.ward.create({
       data: {
-        name: data.name
+        name: data.name,
+        stakeId: data.stakeId
       }
     })
   }
- 
  
   return await prisma.ward.upsert({
     where: {
@@ -29,11 +38,11 @@ export async function upsertWards(data: wardData) {
       name: data.name
     },
     create: {
-      name: data.name
+      name: data.name,
+      stakeId: data.stakeId 
     }
   })
 
- 
 }
 
 export async function DeleteWards(id: string) {

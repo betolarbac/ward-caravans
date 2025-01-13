@@ -22,6 +22,7 @@ export type LoginFormData = z.infer<typeof LoginSchema>;
 export const wardSchema = z.object({
   id: z.string().optional(),
   name: z.string(),
+  stakeId: z.string()
 });
 
 export type wardData = z.infer<typeof wardSchema>;
