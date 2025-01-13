@@ -22,12 +22,24 @@ model User {
   role     String  @default("user")
   wardId   String?
   ward     Ward?   @relation(fields: [wardId], references: [id])
+  Stake    Stake?  @relation(fields: [stakeId], references: [id])
+  stakeId  String?
+}
+
+model Stake {
+  id        String   @id @unique @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  ward      Ward[]
+  user      User[]
 }
 
 model Ward {
   id        String     @id @unique @default(cuid())
   name      String?
   createdAt DateTime   @default(now())
+  stakeId   String
+  stake     Stake      @relation(fields: [stakeId], references: [id])
   users     User[]
   Caravans  Caravans[]
 }
