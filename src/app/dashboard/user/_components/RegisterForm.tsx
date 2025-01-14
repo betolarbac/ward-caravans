@@ -173,30 +173,6 @@ export default function RegisterForm() {
                 />
                 <FormField
                   control={form.control}
-                  name="wardId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Ala</FormLabel>
-                      <Select onValueChange={field.onChange} required>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione a ala" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {wards.map((ward) => (
-                            <SelectItem key={ward.id} value={ward.id as string}>
-                              {ward.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
                   name="stakeId"
                   render={({ field }) => (
                     <FormItem>
@@ -214,6 +190,30 @@ export default function RegisterForm() {
                               value={stake.id as string}
                             >
                               {stake.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="wardId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Ala</FormLabel>
+                      <Select onValueChange={field.onChange} required>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione a ala" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {wards.map((ward) => (
+                            <SelectItem key={ward.id} value={ward.id as string}>
+                              {ward.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
