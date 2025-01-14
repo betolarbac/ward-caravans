@@ -21,7 +21,7 @@ export default async function WardCaravans() {
   const users = await UserLoggedIn();
 
   const filterCaravans =
-    users.role === "admin"
+    users.role === "ward"
       ? caravansWard.filter(
           (caravan) => caravan.ward?.id === users?.ward?.id
         )
@@ -87,6 +87,7 @@ export default async function WardCaravans() {
                         active={caravans.active}
                         wardId={caravans.ward?.id ?? ""}
                         id={caravans.id}
+                        stakeId=""
                       />
                     </TableCell>
                   </TableRow>
