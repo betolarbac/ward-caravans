@@ -14,9 +14,18 @@ import RegisterCaravans from "./_components/RegisterCaravans";
 
 import CaravansDelete from "./_components/DeleteCaravans";
 import EditCaravans from "./_components/EditCaravans";
+import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
 
 export default async function WardCaravans() {
   const caravansWard = await getWardCaravans();
+  const users = await UserLoggedIn();
+
+  const filterCaravans =
+    users.role === "admin"
+      ? caravansWard.filter(
+          (caravan) => caravan.ward?.id === users?.ward?.id
+        )
+      : caravansWard;
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -40,14 +49,14 @@ export default async function WardCaravans() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {caravansWard.length === 0 ? (
+              {filterCaravans.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={6} className="h-24 text-center">
                     Nenhuma caravana cadastrada.
                   </TableCell>
                 </TableRow>
               ) : (
-                caravansWard.map((caravans) => (
+                filterCaravans.map((caravans) => (
                   <TableRow key={caravans.id}>
                     <TableCell className="font-medium py-4">
                       <Link href={`/dashboard/ward-caravans/${caravans.id}`}>
@@ -61,7 +70,9 @@ export default async function WardCaravans() {
                     <TableCell>
                       {caravans.Member.length}/{caravans.vacancy}
                     </TableCell>
-                    <TableCell>{caravans.active === true ? "Ativa" : "Desativada" }</TableCell>
+                    <TableCell>
+                      {caravans.active === true ? "Ativa" : "Desativada"}
+                    </TableCell>
                     <TableCell>
                       <CaravansDelete
                         idCaravans={caravans.id}
