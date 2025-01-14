@@ -17,14 +17,12 @@ import EditCaravans from "./_components/EditCaravans";
 import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
 
 export default async function WardCaravans() {
-  const caravansWard = await getWardCaravans();
-  const users = await UserLoggedIn();
+  const {Stake, role, ward } = await UserLoggedIn();
+  const caravansWard = await getWardCaravans(Stake?.id || "");
 
   const filterCaravans =
-    users.role === "ward"
-      ? caravansWard.filter(
-          (caravan) => caravan.ward?.id === users?.ward?.id
-        )
+    role === "ward"
+      ? caravansWard.filter((caravan) => caravan.ward?.id === ward?.id)
       : caravansWard;
 
   return (
