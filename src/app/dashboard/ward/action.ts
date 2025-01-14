@@ -9,6 +9,7 @@ export async function getWards() {
       name: true,
       stake: {
         select: {
+          id: true,
           name: true
         }
       }
