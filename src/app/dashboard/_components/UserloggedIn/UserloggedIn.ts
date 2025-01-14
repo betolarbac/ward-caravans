@@ -1,3 +1,4 @@
+"use server"
 import prisma from "@/lib/prisma";
 import { getSession } from "../../action";
 
@@ -15,6 +16,12 @@ export default async function UserLoggedIn() {
           name: true,
         },
       },
+      Stake: {
+        select: {
+          id: true,
+          name: true,
+        }
+      }
     },
     where: {id: session.id}
   })
