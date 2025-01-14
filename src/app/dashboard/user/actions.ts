@@ -14,6 +14,12 @@ export async function GetUser() {
           name: true,
         },
       },
+      Stake: {
+        select: {
+          id: true,
+          name: true
+        }
+      }
     },
     orderBy: { name: "asc" },
   });

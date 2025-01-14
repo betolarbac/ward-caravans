@@ -29,7 +29,8 @@ export async function POST(req: Request) {
         password: hashedPassword,
         name: data.name,
         role: data.role,
-        wardId: data.wardId
+        wardId: data.wardId,
+        stakeId: data.stakeId
       }
     })
 

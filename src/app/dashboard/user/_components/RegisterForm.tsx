@@ -56,7 +56,6 @@ export default function RegisterForm() {
       name: "",
       email: "",
       role: "ala",
-      stakeId: "",
       password: "",
     },
   });

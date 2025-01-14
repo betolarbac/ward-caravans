@@ -29,6 +29,7 @@ export default async function User() {
               <TableRow>
                 <TableHead>Nome</TableHead>
                 <TableHead>Email</TableHead>
+                <TableHead>Estaca</TableHead>
                 <TableHead>Ala</TableHead>
                 <TableHead>Função</TableHead>
                 <TableHead>Deletar</TableHead>
@@ -49,6 +50,7 @@ export default async function User() {
                       {user.name}
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.Stake?.name}</TableCell>
                     <TableCell>{user.ward?.name}</TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>
