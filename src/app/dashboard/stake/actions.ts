@@ -15,3 +15,19 @@ export async function GetStake() {
     orderBy: {createdAt: 'desc'}
   })
 }
+
+export async function GetStakeID(id: string) {
+  return await prisma.stake.findMany({
+    where: {id: id},
+    select: {
+      id: true,
+      name: true,
+      ward: {
+        select: {
+          name: true
+        }
+      }
+    },
+    orderBy: {createdAt: 'desc'}
+  })
+}
