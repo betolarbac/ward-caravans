@@ -11,6 +11,7 @@ export async function GetUser() {
       role: true,
       ward: {
         select: {
+          id: true,
           name: true,
         },
       },
