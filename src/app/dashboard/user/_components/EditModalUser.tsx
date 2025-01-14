@@ -33,7 +33,14 @@ import { Loader, Pencil } from "lucide-react";
 import { getWards } from "../../ward/action";
 import { useRouter } from "next/navigation";
 import { EditUser } from "../actions";
+import { GetStake } from "../../stake/actions";
 interface Ward {
+  id: string;
+  name: string | null;
+  createdAt: Date;
+}
+
+interface Stake {
   id: string;
   name: string | null;
   createdAt: Date;
@@ -43,6 +50,7 @@ export default function EditModalUser(user: RegisterFormData) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [wards, setWards] = useState<Ward[]>([]);
+  const [stake, setStake] = useState<Stake[]>([]);
   const router = useRouter();
 
   const form = useForm<RegisterFormData>({
@@ -51,6 +59,8 @@ export default function EditModalUser(user: RegisterFormData) {
       name: user.name,
       email: user.email,
       role: user.role,
+      wardId: user.wardId,
+      stakeId: user.stakeId,
       password: "",
     },
   });
@@ -59,11 +69,38 @@ export default function EditModalUser(user: RegisterFormData) {
     async function fetchWards() {
       try {
         const wardsData = await getWards();
-        setWards(wardsData);
+        const formattedWards = wardsData.map((ward) => ({
+          id: ward.id,
+          name: ward.name,
+          createdAt: new Date(),
+        }));
+        setWards(formattedWards);
       } catch (error) {
         console.error("Erro ao buscar wards:", error);
       }
     }
+
+    async function GetStakeWard() {
+      try {
+        const stakes = await GetStake();
+        if (!stake) {
+          throw new Error("GetStake returned null");
+        }
+        setStake(
+          stakes.map((stake) => ({
+            id: stake.id,
+            name: stake.name,
+            createdAt: new Date(),
+          }))
+        );
+        return stakes;
+      } catch (error) {
+        console.error(error || "Erro inesperado");
+        return [];
+      }
+    }
+
+    GetStakeWard();
     fetchWards();
   }, []);
 
@@ -79,7 +116,7 @@ export default function EditModalUser(user: RegisterFormData) {
       console.error(error || "Error inesperado");
     } finally {
       setLoading(false);
-      setOpen(false)
+      setOpen(false);
     }
   }
 
@@ -133,11 +170,42 @@ export default function EditModalUser(user: RegisterFormData) {
                 />
                 <FormField
                   control={form.control}
+                  name="stakeId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Estaca</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value} required>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione a estaca" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {stake.map((stake) => (
+                            <SelectItem
+                              key={stake.id}
+                              value={stake.id as string}
+                            >
+                              {stake.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
                   name="wardId"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Ala</FormLabel>
-                      <Select onValueChange={field.onChange} required>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        required
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione a função do usuário" />
@@ -161,18 +229,19 @@ export default function EditModalUser(user: RegisterFormData) {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Função</FormLabel>
-                      <Select onValueChange={field.onChange} required>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        required
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione a função do usuário" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="user">User</SelectItem>
-                          <SelectItem value="admin">admin</SelectItem>
-                          <SelectItem value="superAdmin">
-                            super admin
-                          </SelectItem>
+                          <SelectItem value="ward">Ala</SelectItem>
+                          <SelectItem value="stake">Estaca</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />

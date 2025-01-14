@@ -57,7 +57,7 @@ export default async function User() {
                      <DeleteModalUser idUser={user.id} name={user.name ?? ""} />
                     </TableCell>
                     <TableCell>
-                    <EditModalUser name={user.name ?? ""} email={user.email} role={user.role} password="" wardId="" stakeId="" />
+                    <EditModalUser name={user.name ?? ""} email={user.email} role={user.role} password="" wardId={user.ward?.id ?? ""} stakeId={user.Stake?.id ?? ""} />
                     </TableCell>
                   </TableRow>
                 ))
