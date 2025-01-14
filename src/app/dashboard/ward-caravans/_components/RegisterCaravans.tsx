@@ -44,6 +44,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import UserLoggedIn from "../../_components/UserloggedIn/UserloggedIn";
 
 interface Ward {
   id: string;
@@ -70,15 +71,25 @@ export default function RegisterCaravans() {
   useEffect(() => {
     async function fetchWards() {
       try {
+        const user = await UserLoggedIn();
         const wardsData = await getWards();
-        setWards(wardsData);
+        const formattedWards = wardsData.map((ward) => ({
+          id: ward.id,
+          name: ward.name,
+          stakeId: ward.stake.id,
+          createdAt: new Date(),
+        }));
+        setWards(
+          formattedWards.filter((ward) => ward.stakeId === user.Stake?.id)
+        );
+
       } catch (error) {
         console.log("erro ao buscar wards", error);
       }
     }
 
     fetchWards();
-  }, []);
+  }, [open]);
 
   async function onSubmit(data: CaravansWardProps) {
     setLoading(true);
