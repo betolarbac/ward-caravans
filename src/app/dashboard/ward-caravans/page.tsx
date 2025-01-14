@@ -87,7 +87,6 @@ export default async function WardCaravans() {
                         active={caravans.active}
                         wardId={caravans.ward?.id ?? ""}
                         id={caravans.id}
-                        stakeId=""
                       />
                     </TableCell>
                   </TableRow>
