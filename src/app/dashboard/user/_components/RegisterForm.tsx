@@ -32,7 +32,13 @@ import { useForm } from "react-hook-form";
 import { Loader } from "lucide-react";
 import { getWards } from "../../ward/action";
 import { useRouter } from "next/navigation";
+import { GetStake } from "../../stake/actions";
 interface Ward {
+  id: string;
+  name: string | null;
+  createdAt: Date;
+}
+interface Stake {
   id: string;
   name: string | null;
   createdAt: Date;
@@ -41,6 +47,7 @@ export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [wards, setWards] = useState<Ward[]>([]);
+  const [stake, setStake] = useState<Stake[]>([]);
   const router = useRouter();
 
   const form = useForm<RegisterFormData>({
@@ -48,7 +55,8 @@ export default function RegisterForm() {
     defaultValues: {
       name: "",
       email: "",
-      role: "user",
+      role: "ala",
+      stakeId: "",
       password: "",
     },
   });
@@ -57,11 +65,38 @@ export default function RegisterForm() {
     async function fetchWards() {
       try {
         const wardsData = await getWards();
-        setWards(wardsData);
+        const formattedWards = wardsData.map((ward) => ({
+          id: ward.id,
+          name: ward.name,
+          createdAt: new Date(),
+        }));
+        setWards(formattedWards);
       } catch (error) {
         console.error("Erro ao buscar wards:", error);
       }
     }
+
+    async function GetStakeWard() {
+      try {
+        const stakes = await GetStake();
+        if (!stake) {
+          throw new Error("GetStake returned null");
+        }
+        setStake(
+          stakes.map((stake) => ({
+            id: stake.id,
+            name: stake.name,
+            createdAt: new Date(),
+          }))
+        );
+        return stakes;
+      } catch (error) {
+        console.error(error || "Erro inesperado");
+        return [];
+      }
+    }
+
+    GetStakeWard();
     fetchWards();
   }, []);
 
@@ -87,6 +122,7 @@ export default function RegisterForm() {
       console.error(error || "Error inesperado");
     } finally {
       setLoading(false);
+      setOpen(false);
     }
   }
 
@@ -98,9 +134,9 @@ export default function RegisterForm() {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[360px]">
           <DialogHeader>
-            <DialogTitle>Nova Ala</DialogTitle>
+            <DialogTitle>Novo Usuário </DialogTitle>
             <DialogDescription>
-              Faça o cadastro de uma nova ala da sua estaca
+              Faça o cadastro de um novo usuário
             </DialogDescription>
           </DialogHeader>
 
@@ -145,13 +181,40 @@ export default function RegisterForm() {
                       <Select onValueChange={field.onChange} required>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Selecione a função do usuário" />
+                            <SelectValue placeholder="Selecione a ala" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                           {wards.map((ward) => (
                             <SelectItem key={ward.id} value={ward.id as string}>
                               {ward.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="stakeId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Estaca</FormLabel>
+                      <Select onValueChange={field.onChange} required>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Selecione a estaca" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {stake.map((stake) => (
+                            <SelectItem
+                              key={stake.id}
+                              value={stake.id as string}
+                            >
+                              {stake.name}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -169,15 +232,12 @@ export default function RegisterForm() {
                       <Select onValueChange={field.onChange} required>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Selecione a função do usuário" />
+                            <SelectValue placeholder="Selecione a autorização do usuário" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="user">User</SelectItem>
-                          <SelectItem value="admin">admin</SelectItem>
-                          <SelectItem value="superAdmin">
-                            super admin
-                          </SelectItem>
+                          <SelectItem value="ward">Ala</SelectItem>
+                          <SelectItem value="stake">Estaca</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
