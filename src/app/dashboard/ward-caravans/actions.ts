@@ -2,7 +2,7 @@
 import prisma from "@/lib/prisma";
 import { CaravansWardProps } from "@/lib/validators";
 
-export async function getWardCaravans(){
+export async function getWardCaravans(id: string){
   const wardCaravans = await prisma.caravans.findMany({
     select: {
       id: true,
@@ -13,7 +13,13 @@ export async function getWardCaravans(){
       ward: {
         select: {
           id: true,
-          name: true
+          name: true,
+          stake: {
+            select: {
+              id: true,
+              name: true
+            }
+          }
         }
       },
       Member: {
@@ -21,6 +27,13 @@ export async function getWardCaravans(){
           id: true,
           name: true
         }
+      },
+    },
+    where: {
+      ward: {
+       stake: {
+        id: id
+       }
       },
     }
   })
