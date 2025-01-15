@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Header from "../_components/header";
 import Link from "next/link";
-import { Calendar, School, User } from "lucide-react";
+import { Calendar, House, School, User } from "lucide-react";
 import { getWardCaravans } from "../ward-caravans/actions";
 
 
@@ -21,9 +21,16 @@ export default async function Dashboard() {
               </CardHeader>
 
               <CardContent>
+                
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm text-muted-foreground flex items-center">
                     <School className="w-4 h-4 mr-1" />
+                    {caravans.ward?.stake.name}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm text-muted-foreground flex items-center">
+                    <House className="w-4 h-4 mr-1" />
                     {caravans.ward?.name}
                   </span>
                   <span className="text-sm text-muted-foreground flex items-center">
