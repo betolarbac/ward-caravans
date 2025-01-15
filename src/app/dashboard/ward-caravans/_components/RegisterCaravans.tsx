@@ -72,7 +72,7 @@ export default function RegisterCaravans() {
     async function fetchWards() {
       try {
         const user = await UserLoggedIn();
-        const wardsData = await getWards();
+        const wardsData = user.role === "ward" ?  await getWards(user.ward?.id) : await getWards();
         const formattedWards = wardsData.map((ward) => ({
           id: ward.id,
           name: ward.name,
@@ -220,7 +220,7 @@ export default function RegisterCaravans() {
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
+                      <PopoverContent className="w-auto p-0" align="start" side="top">
                         <Calendar
                           mode="single"
                           selected={field.value}
