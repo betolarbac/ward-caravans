@@ -35,8 +35,8 @@ export function Sidebar({ user }: SidebarProps) {
         <SidebarMenu className="px-2">
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
-                "transition delay-75 duration-75 ease-in-out hover:bg-primary hover:text-primary-foreground",
-                pathName === "/dashboard" && "bg-primary text-primary-foreground")}>
+                "transition delay-75 duration-75 ease-in-out hover:bg-[#167b9c;] hover:text-primary-foreground",
+                pathName === "/dashboard" && "bg-[#167b9c;] text-primary-foreground")}>
               <Link href="/dashboard" className="flex items-center">
                 <Bus className="mr-2 h-4 w-4" />
                 <span>Caravanas</span>
@@ -45,8 +45,8 @@ export function Sidebar({ user }: SidebarProps) {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
-                "transition delay-75 duration-75 ease-in-out hover:bg-primary hover:text-primary-foreground",
-                pathName.startsWith("/dashboard/ward-caravans") && "bg-primary text-primary-foreground")}>
+                "transition delay-75 duration-75 ease-in-out hover:bg-[#167b9c;] hover:text-primary-foreground",
+                pathName.startsWith("/dashboard/ward-caravans") && "bg-[#167b9c;] text-primary-foreground")}>
               <Link href="/dashboard/ward-caravans" className="flex items-center">
                 <BusFront className="mr-2 h-4 w-4" />
                 <span>Caravanas da Ala</span>
@@ -55,8 +55,8 @@ export function Sidebar({ user }: SidebarProps) {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
-                "transition delay-75 duration-75 ease-in-out hover:bg-primary hover:text-primary-foreground",
-                pathName === "/dashboard/ward" && "bg-primary text-primary-foreground")}>
+                "transition delay-75 duration-75 ease-in-out hover:bg-[#167b9c;] hover:text-primary-foreground",
+                pathName === "/dashboard/ward" && "bg-[#167b9c;] text-primary-foreground")}>
               <Link href="/dashboard/ward" className="flex items-center">
                 <School className="mr-2 h-4 w-4" />
                 <span>Alas</span>
@@ -65,8 +65,8 @@ export function Sidebar({ user }: SidebarProps) {
           </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className={cn("w-full justify-start",
-                "transition delay-75 duration-75 ease-in-out hover:bg-primary hover:text-primary-foreground",
-                pathName === "/dashboard/user" && "bg-primary text-primary-foreground")}>
+                "transition delay-75 duration-75 ease-in-out hover:bg-[#167b9c;] hover:text-primary-foreground",
+                pathName === "/dashboard/user" && "bg-[#167b9c;] text-primary-foreground")}>
               <Link href="/dashboard/user" className="flex items-center">
                 <User className="mr-2 h-4 w-4" />
                 <span>Usuários</span>
@@ -91,8 +91,8 @@ export function Sidebar({ user }: SidebarProps) {
           className="w-full"
           onClick={() => signOut({ callbackUrl: "/" })}
         >
-          <LogOut className="mr-2 h-4 w-4" />
-          Sair
+          <LogOut className="mr-2 h-4 w-4 text-destructive" />
+          <span className="text-destructive">Sair</span>
         </Button>
       </SidebarFooter>
     </ShadcnSidebar>
