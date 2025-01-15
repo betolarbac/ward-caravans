@@ -236,7 +236,7 @@ export default function EditCaravans(caravans: CaravansWardProps) {
               />
 
               <DialogFooter>
-                <Button type="submit" disabled={loading} className="w-20">
+                <Button type="submit" disabled={loading} className="w-20 bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
                   {loading ? (
                     <Loader className="w-4 h-4 animate-spin" />
                   ) : (

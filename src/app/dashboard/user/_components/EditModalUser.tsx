@@ -263,7 +263,7 @@ export default function EditModalUser(user: RegisterFormData) {
                   )}
                 />
                 <DialogFooter>
-                  <Button type="submit" disabled={loading}>
+                  <Button type="submit" disabled={loading} className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
                     {loading ? (
                       <Loader className="w-4 h-4 animate-spin" />
                     ) : (
