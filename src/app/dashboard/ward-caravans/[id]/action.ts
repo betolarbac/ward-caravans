@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import prisma from "@/lib/prisma";
 import { CaravansMemberProps } from "@/lib/validators";
 
@@ -9,48 +9,51 @@ export async function GetCaravansPage(id: string) {
     },
     include: {
       Member: true,
+      ward: {
+        select: {
+          stakeId: true,
+        },
+      },
     },
   });
 }
 
 export async function UpsertCaravansMember(data: CaravansMemberProps) {
-  if(!data.id) {
+  if (!data.id) {
     return await prisma.member.create({
       data: {
         name: data.name,
         cpf: data.cpf,
         ward: data.ward,
         pay: data.pay,
-        caravansId: data.caravansId
-      }
-    })
+        caravansId: data.caravansId,
+      },
+    });
   }
-
 
   return await prisma.member.upsert({
     where: {
-      id: data.id
+      id: data.id,
     },
     update: {
       name: data.name,
       cpf: data.cpf,
       ward: data.ward,
       pay: data.pay,
-      caravansId: data.caravansId
+      caravansId: data.caravansId,
     },
     create: {
       name: data.name,
       cpf: data.cpf,
       ward: data.ward,
       pay: data.pay,
-      caravansId: data.caravansId
-    }
-  })
+      caravansId: data.caravansId,
+    },
+  });
 }
 
 export async function DeleteCaravansMember(id: string) {
-
   return await prisma.member.delete({
-    where: {id: id}
-  })
+    where: { id: id },
+  });
 }

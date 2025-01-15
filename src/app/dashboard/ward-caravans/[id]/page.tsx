@@ -13,6 +13,7 @@ import MemberCaravans from "./_components/MemberCaravans";
 import formatCPF from "./_components/formatCpf";
 import CaravansMemberDelete from "./_components/deleteMemberCaravans";
 import EditMemberCaravans from "./_components/EditMemberCaravans";
+import UserLoggedIn from "../../_components/UserloggedIn/UserloggedIn";
 
 interface CaravanPageProps {
   params: {
@@ -22,13 +23,23 @@ interface CaravanPageProps {
 
 export default async function CaravansPage({ params }: CaravanPageProps) {
   const { id } = await params;
-
+  const { ward, role, Stake } = await UserLoggedIn();
   const caravansMember = await GetCaravansPage(id);
+  const authEdit =
+    (role === "ward" && ward?.id === caravansMember?.wardId) ||
+    (role === "stake" && Stake?.id === caravansMember?.ward?.stakeId);
+
+  console.log("caravans", caravansMember)
+
   return (
     <div className="max-w-[1200px] mx-auto">
       <div className="flex justify-between">
         <Header title={caravansMember?.name as string} />
-        <MemberCaravans id={id as string} />
+        {(!caravansMember?.active && ward?.id === caravansMember?.wardId) ? (
+          <MemberCaravans id={id as string} />
+        ) : (caravansMember?.active) && (
+          <MemberCaravans id={id as string} />
+        )}
       </div>
 
       <Card>
@@ -66,22 +77,31 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
                         <span className="text-red-500">Não</span>
                       )}
                     </TableCell>
-                    <TableCell>
-                      <CaravansMemberDelete
-                        idMemberCaravans={caravans.id}
-                        name={caravans.name || ""}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <EditMemberCaravans
-                        id={caravans.id}
-                        caravansId={id}
-                        name={caravans.name ?? ""}
-                        ward={caravans.ward}
-                        cpf={caravans.cpf}
-                        pay={caravans.pay}
-                      />
-                    </TableCell>
+                    {authEdit ? (
+                      <>
+                        <TableCell>
+                          <CaravansMemberDelete
+                            idMemberCaravans={caravans.id}
+                            name={caravans.name || ""}
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <EditMemberCaravans
+                            id={caravans.id}
+                            caravansId={id}
+                            name={caravans.name ?? ""}
+                            ward={caravans.ward}
+                            cpf={caravans.cpf}
+                            pay={caravans.pay}
+                          />
+                        </TableCell>
+                      </>
+                    ) : (
+                      <>
+                        <TableCell></TableCell>
+                        <TableCell></TableCell>
+                      </>
+                    )}
                   </TableRow>
                 ))
               )}
