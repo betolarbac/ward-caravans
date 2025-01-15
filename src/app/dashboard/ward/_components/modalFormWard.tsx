@@ -89,7 +89,7 @@ export default function ModalFormWard() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Adicionar nova ala</Button>
+        <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">Adicionar nova ala</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[360px]">
         <DialogHeader>
@@ -143,7 +143,7 @@ export default function ModalFormWard() {
                 )}
               />
               <DialogFooter>
-                <Button type="submit" disabled={loading} className="w-20">
+                <Button type="submit" disabled={loading} className="w-20 bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
                   {loading ? (
                     <Loader className="w-4 h-4 animate-spin" />
                   ) : (

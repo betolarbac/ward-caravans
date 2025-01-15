@@ -129,7 +129,7 @@ export default function RegisterForm() {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>Adicionar novo usuário</Button>
+          <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out" >Adicionar novo usuário</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[360px]">
           <DialogHeader>
@@ -258,7 +258,7 @@ export default function RegisterForm() {
                   )}
                 />
                 <DialogFooter>
-                  <Button type="submit" disabled={loading}>
+                  <Button type="submit" disabled={loading} className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
                     {loading ? (
                       <Loader className="w-4 h-4 animate-spin" />
                     ) : (
