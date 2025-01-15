@@ -41,10 +41,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { upsertWardCaravans } from "../actions";
 import { useRouter } from "next/navigation";
+import { getWards } from "../../ward/action";
+
+interface ward {
+  id: string;
+  name: string;
+}
 
 export default function EditCaravans(caravans: CaravansWardProps) {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [ward, setWards] = useState<ward[]>([]);
   const router = useRouter();
 
   const form = useForm({
@@ -83,6 +90,14 @@ export default function EditCaravans(caravans: CaravansWardProps) {
       active: caravans.active,
       wardId: caravans.wardId,
     });
+
+    async function fetchWard() {
+      const ward = await getWards(caravans.wardId);
+
+      setWards(ward as ward[]);
+    }
+
+    fetchWard();
   }, [form, caravans]);
 
   return (
@@ -143,14 +158,22 @@ export default function EditCaravans(caravans: CaravansWardProps) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Ala</FormLabel>
-                    <Select onValueChange={field.onChange} required>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      disabled
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Selecione a ala da caravana" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={caravans.wardId}>teste</SelectItem>
+                        {ward.map((ward) => (
+                          <SelectItem key={ward.id} value={ward.id}>
+                            {ward.name}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />

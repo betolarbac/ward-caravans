@@ -2,7 +2,7 @@
 import prisma from "@/lib/prisma";
 import { wardData } from "@/lib/validators";
 
-export async function getWards() {
+export async function getWards(id?: string) {
   const wards = await prisma.ward.findMany({
     select: {
       id: true,
@@ -14,6 +14,7 @@ export async function getWards() {
         }
       }
     },
+    where: {id: id},
     orderBy: { createdAt: 'desc' }
   })
 
