@@ -64,6 +64,7 @@ export default function RegisterCaravans() {
       name: "",
       date: new Date(),
       vacancy: 0,
+      value: 0,
       active: false,
     },
   });
@@ -143,6 +144,23 @@ export default function RegisterCaravans() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Vagas</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        value={field.value?.toString() || ""}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Valor da Caravana</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
