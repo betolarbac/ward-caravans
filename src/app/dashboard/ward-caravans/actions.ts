@@ -9,6 +9,7 @@ export async function getWardCaravans(id?: string){
       name: true,
       date: true,
       vacancy: true,
+      value: true,
       active: true,
       ward: {
         select: {
