@@ -49,6 +49,7 @@ model Caravans {
   name    String?
   date    DateTime?
   vacancy Int?
+  value   Decimal?   @default(0)
   active  Boolean   @default(true)
   wardId  String
   ward    Ward?     @relation(fields: [wardId], references: [id])
