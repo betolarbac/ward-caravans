@@ -29,7 +29,6 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
     (role === "ward" && ward?.id === caravansMember?.wardId) ||
     (role === "stake" && Stake?.id === caravansMember?.ward?.stakeId);
 
-  console.log("caravans", caravansMember)
 
   return (
     <div className="max-w-[1200px] mx-auto">
