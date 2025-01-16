@@ -33,6 +33,7 @@ export const CaravansWardSchema = z.object({
   name: z.string(),
   date: z.date().min(new Date()),
   vacancy: z.number(),
+  value: z.number(),
   active: z.boolean().default(true),
   wardId: z.string(),
 });

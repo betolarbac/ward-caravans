@@ -49,6 +49,7 @@ export async function upsertWardCaravans(data: CaravansWardProps){
         name: data.name,
         date: data.date,
         vacancy: data.vacancy,
+        value: data.value,
         active: data.active,
         wardId: data.wardId
       }
@@ -63,6 +64,7 @@ export async function upsertWardCaravans(data: CaravansWardProps){
       name: data.name,
       date: data.date,
       vacancy: data.vacancy,
+      value: data.value,
       active: data.active,
       wardId: data.wardId
     },
@@ -70,6 +72,7 @@ export async function upsertWardCaravans(data: CaravansWardProps){
       name: data.name,
       date: data.date,
       vacancy: data.vacancy,
+      value: data.value,
       active: data.active,
       wardId: data.wardId
     }
