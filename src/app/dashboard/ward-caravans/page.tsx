@@ -41,6 +41,7 @@ export default async function WardCaravans() {
                 <TableHead>Ala</TableHead>
                 <TableHead>Data</TableHead>
                 <TableHead>Vagas</TableHead>
+                <TableHead>Valor</TableHead>
                 <TableHead>Ativar/Desativar</TableHead>
                 <TableHead>Deletar</TableHead>
                 <TableHead>Editar</TableHead>
@@ -69,6 +70,9 @@ export default async function WardCaravans() {
                       {caravans.Member.length}/{caravans.vacancy}
                     </TableCell>
                     <TableCell>
+                     R$ {caravans.value?.toFixed(2)}
+                    </TableCell>
+                    <TableCell>
                       {caravans.active === true ? "Ativa" : "Desativada"}
                     </TableCell>
                     <TableCell>
@@ -85,6 +89,7 @@ export default async function WardCaravans() {
                         active={caravans.active}
                         wardId={caravans.ward?.id ?? ""}
                         id={caravans.id}
+                        value={typeof caravans.value === "number" ? caravans.value : 0}
                       />
                     </TableCell>
                   </TableRow>

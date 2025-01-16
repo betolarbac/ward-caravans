@@ -61,6 +61,7 @@ export default function EditCaravans(caravans: CaravansWardProps) {
       name: caravans.name,
       date: caravans.date,
       vacancy: caravans.vacancy,
+      value: caravans.value,
       active: caravans.active,
       wardId: caravans.wardId,
     },
@@ -87,6 +88,7 @@ export default function EditCaravans(caravans: CaravansWardProps) {
       name: caravans.name,
       date: caravans.date,
       vacancy: caravans.vacancy,
+      value: caravans.value,
       active: caravans.active,
       wardId: caravans.wardId,
     });
@@ -144,6 +146,23 @@ export default function EditCaravans(caravans: CaravansWardProps) {
                       <Input
                         type="number"
                         value={field.value?.toString() || ""}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="value"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Valor da Caravana</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        value={field.value || "0"}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
