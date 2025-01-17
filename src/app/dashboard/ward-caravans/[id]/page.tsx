@@ -8,12 +8,12 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import Header from "../../_components/header";
-import { GetCaravansPage } from "./action";
 import MemberCaravans from "./_components/MemberCaravans";
 import formatCPF from "./_components/formatCpf";
 import CaravansMemberDelete from "./_components/deleteMemberCaravans";
 import EditMemberCaravans from "./_components/EditMemberCaravans";
 import UserLoggedIn from "../../_components/UserloggedIn/UserloggedIn";
+import AuthEdit from "./_components/authEdit";
 
 interface CaravanPageProps {
   params: {
@@ -23,21 +23,18 @@ interface CaravanPageProps {
 
 export default async function CaravansPage({ params }: CaravanPageProps) {
   const { id } = await params;
-  const { ward, role, Stake } = await UserLoggedIn();
-  const caravansMember = await GetCaravansPage(id);
-  const authEdit =
-    (role === "ward" && ward?.id === caravansMember?.wardId) ||
-    (role === "stake" && Stake?.id === caravansMember?.ward?.stakeId);
+  const { ward } = await UserLoggedIn();
 
+  const { authEdit, caravansMember } = await AuthEdit(id);
 
   return (
     <div className="max-w-[1200px] mx-auto">
       <div className="flex justify-between">
         <Header title={caravansMember?.name as string} />
-        {(!caravansMember?.active && ward?.id === caravansMember?.wardId) ? (
+        {!caravansMember?.active && ward?.id === caravansMember?.wardId ? (
           <MemberCaravans id={id as string} />
-        ) : (caravansMember?.active) && (
-          <MemberCaravans id={id as string} />
+        ) : (
+          caravansMember?.active && <MemberCaravans id={id as string} />
         )}
       </div>
 
