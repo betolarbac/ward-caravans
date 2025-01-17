@@ -9,21 +9,13 @@ import {
 } from "@/components/ui/table";
 import Header from "../_components/header";
 import Link from "next/link";
-import { getWardCaravans } from "./actions";
 import RegisterCaravans from "./_components/RegisterCaravans";
-
 import CaravansDelete from "./_components/DeleteCaravans";
 import EditCaravans from "./_components/EditCaravans";
-import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
+import FilterCaravans from "./_components/filterCaravans";
 
 export default async function WardCaravans() {
-  const {Stake, role, ward } = await UserLoggedIn();
-  const caravansWard = await getWardCaravans(Stake?.id || "");
-
-  const filterCaravans =
-    role === "ward"
-      ? caravansWard.filter((caravan) => caravan.ward?.id === ward?.id)
-      : caravansWard;
+  const filterCaravans = await FilterCaravans();
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -69,9 +61,7 @@ export default async function WardCaravans() {
                     <TableCell>
                       {caravans.Member.length}/{caravans.vacancy}
                     </TableCell>
-                    <TableCell>
-                     R$ {caravans.value?.toFixed(2)}
-                    </TableCell>
+                    <TableCell>R$ {caravans.value?.toFixed(2)}</TableCell>
                     <TableCell>
                       {caravans.active === true ? "Ativa" : "Desativada"}
                     </TableCell>
@@ -89,7 +79,11 @@ export default async function WardCaravans() {
                         active={caravans.active}
                         wardId={caravans.ward?.id ?? ""}
                         id={caravans.id}
-                        value={typeof caravans.value === "number" ? caravans.value : 0}
+                        value={
+                          typeof caravans.value === "number"
+                            ? caravans.value
+                            : 0
+                        }
                       />
                     </TableCell>
                   </TableRow>
