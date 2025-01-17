@@ -25,7 +25,7 @@ import { GetCaravansPage, UpsertCaravansMember } from "../action";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Switch } from "@/components/ui/switch";
-import { Loader } from "lucide-react";
+import { Loader, UserRoundPlus } from "lucide-react";
 
 interface CaravansId {
   id: string;
@@ -85,7 +85,7 @@ export default function MemberCaravans({ id }: CaravansId) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">Adicionar Novo Membro</Button>
+        <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out"><UserRoundPlus /> Adicionar Novo Membro</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[360px]">
         <DialogHeader>
