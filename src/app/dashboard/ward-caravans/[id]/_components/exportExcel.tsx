@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import * as XLSX from "xlsx";
 import formatCPF from "./formatCpf";
+import { FileSpreadsheet } from "lucide-react";
 
 type CaravansMember = {
   Member: {
@@ -50,5 +51,5 @@ export default function ExportExcel({ caravansMember }: ExportExcelProps) {
     XLSX.writeFile(workbook, `${caravansMember.name || "Caravans"}.xlsx`);
   };
 
-  return <Button onClick={exportExcel} disabled={caravansMember?.Member.length === 0}>Exporta para Excel</Button>;
+  return <Button onClick={exportExcel} disabled={caravansMember?.Member.length === 0}> <FileSpreadsheet /> Exporta para Excel</Button>;
 }
