@@ -14,6 +14,7 @@ import CaravansMemberDelete from "./_components/deleteMemberCaravans";
 import EditMemberCaravans from "./_components/EditMemberCaravans";
 import UserLoggedIn from "../../_components/UserloggedIn/UserloggedIn";
 import AuthEdit from "./_components/authEdit";
+import ExportExcel from "./_components/exportExcel";
 
 interface CaravanPageProps {
   params: {
@@ -31,11 +32,15 @@ export default async function CaravansPage({ params }: CaravanPageProps) {
     <div className="max-w-[1200px] mx-auto">
       <div className="flex justify-between">
         <Header title={caravansMember?.name as string} />
-        {!caravansMember?.active && ward?.id === caravansMember?.wardId ? (
-          <MemberCaravans id={id as string} />
-        ) : (
-          caravansMember?.active && <MemberCaravans id={id as string} />
-        )}
+
+        <div className="flex gap-2">
+          {authEdit ? <ExportExcel caravansMember={caravansMember} /> : null}
+          {!caravansMember?.active && ward?.id === caravansMember?.wardId ? (
+            <MemberCaravans id={id as string} />
+          ) : (
+            caravansMember?.active && <MemberCaravans id={id as string} />
+          )}
+        </div>
       </div>
 
       <Card>
