@@ -8,7 +8,7 @@ interface WardProps {
 }
 
 export async function GET(request: NextRequest, { params }: WardProps) {
-  const id = await params.id;
+  const { id } = await params;
 
   try {
     const ward = await prisma.ward.findMany({
