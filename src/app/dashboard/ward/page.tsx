@@ -12,9 +12,11 @@ import ModalFormWard from "./_components/modalFormWard";
 import { getWards } from "./action";
 import DeleteModalWard from "./_components/deleteModalWard";
 import EditModalWard from "./_components/editModalWard";
+import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
 
 export default async function Ward() {
-  const ward = await getWards();
+  const { Stake } = await UserLoggedIn();
+  const ward = await getWards(undefined, Stake?.id);
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -49,10 +51,17 @@ export default async function Ward() {
                     </TableCell>
                     <TableCell>{ward.stake?.name}</TableCell>
                     <TableCell>
-                     <DeleteModalWard idWards={ward.id} name={ward.name ?? ""} />
+                      <DeleteModalWard
+                        idWards={ward.id}
+                        name={ward.name ?? ""}
+                      />
                     </TableCell>
                     <TableCell>
-                     <EditModalWard name={ward.name ?? ""} id={ward.id} stakeId="" />
+                      <EditModalWard
+                        name={ward.name ?? ""}
+                        id={ward.id}
+                        stakeId=""
+                      />
                     </TableCell>
                   </TableRow>
                 ))

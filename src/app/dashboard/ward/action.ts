@@ -1,8 +1,8 @@
-"use server"
+"use server";
 import prisma from "@/lib/prisma";
 import { wardData } from "@/lib/validators";
 
-export async function getWards(id?: string) {
+export async function getWards(id?: string, idStake?: string) {
   const wards = await prisma.ward.findMany({
     select: {
       id: true,
@@ -10,45 +10,48 @@ export async function getWards(id?: string) {
       stake: {
         select: {
           id: true,
-          name: true
-        }
-      }
+          name: true,
+        },
+      },
     },
-    where: {id: id},
-    orderBy: { createdAt: 'desc' }
-  })
+    where: {
+      id: id,
+      stake: {
+        id: idStake,
+      },
+    },
+    orderBy: { createdAt: "desc" },
+  });
 
-  return wards
+  return wards;
 }
 
 export async function upsertWards(data: wardData) {
- 
-  if(!data.id) {
+  if (!data.id) {
     return await prisma.ward.create({
       data: {
         name: data.name,
-        stakeId: data.stakeId
-      }
-    })
+        stakeId: data.stakeId,
+      },
+    });
   }
- 
+
   return await prisma.ward.upsert({
     where: {
-      id: data.id
+      id: data.id,
     },
     update: {
-      name: data.name
+      name: data.name,
     },
     create: {
       name: data.name,
-      stakeId: data.stakeId 
-    }
-  })
-
+      stakeId: data.stakeId,
+    },
+  });
 }
 
 export async function DeleteWards(id: string) {
   return await prisma.ward.delete({
-    where: {id: id}
-  })
+    where: { id: id },
+  });
 }
