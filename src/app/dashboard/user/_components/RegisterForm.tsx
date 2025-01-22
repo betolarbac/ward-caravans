@@ -33,6 +33,7 @@ import { Loader } from "lucide-react";
 import { getWards } from "../../ward/action";
 import { useRouter } from "next/navigation";
 import { GetStake } from "../../stake/actions";
+import UserLoggedIn from "../../_components/UserloggedIn/UserloggedIn";
 interface Ward {
   id: string;
   name: string | null;
@@ -63,7 +64,8 @@ export default function RegisterForm() {
   useEffect(() => {
     async function fetchWards() {
       try {
-        const wardsData = await getWards();
+        const { Stake } = await UserLoggedIn();
+        const wardsData = await getWards(undefined, Stake?.id);
         const formattedWards = wardsData.map((ward) => ({
           id: ward.id,
           name: ward.name,
@@ -77,7 +79,8 @@ export default function RegisterForm() {
 
     async function GetStakeWard() {
       try {
-        const stakes = await GetStake();
+        const { Stake } = await UserLoggedIn();
+        const stakes = await GetStake(Stake?.id);
         if (!stake) {
           throw new Error("GetStake returned null");
         }
@@ -129,7 +132,9 @@ export default function RegisterForm() {
     <div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out" >Adicionar novo usuário</Button>
+          <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
+            Adicionar novo usuário
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[360px]">
           <DialogHeader>
@@ -258,7 +263,11 @@ export default function RegisterForm() {
                   )}
                 />
                 <DialogFooter>
-                  <Button type="submit" disabled={loading} className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out"
+                  >
                     {loading ? (
                       <Loader className="w-4 h-4 animate-spin" />
                     ) : (

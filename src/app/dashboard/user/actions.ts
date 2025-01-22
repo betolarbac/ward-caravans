@@ -2,7 +2,7 @@
 import prisma from "@/lib/prisma";
 import { RegisterFormData } from "@/lib/validators";
 
-export async function GetUser() {
+export async function GetUser(id?: string) {
   const user = await prisma.user.findMany({
     select: {
       id: true,
@@ -18,9 +18,12 @@ export async function GetUser() {
       Stake: {
         select: {
           id: true,
-          name: true
-        }
-      }
+          name: true,
+        },
+      },
+    },
+    where: {
+      stakeId: id,
     },
     orderBy: { name: "asc" },
   });

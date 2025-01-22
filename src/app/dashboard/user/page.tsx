@@ -12,9 +12,11 @@ import RegisterForm from "./_components/RegisterForm";
 import { GetUser } from "./actions";
 import DeleteModalUser from "./_components/DeleteModalUser";
 import EditModalUser from "./_components/EditModalUser";
+import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
 
 export default async function User() {
-  const users = await GetUser();
+  const { Stake } = await UserLoggedIn();
+  const users = await GetUser(Stake?.id);
 
   return (
     <div className="max-w-[1200px] mx-auto">
@@ -54,10 +56,20 @@ export default async function User() {
                     <TableCell>{user.ward?.name}</TableCell>
                     <TableCell>{user.role}</TableCell>
                     <TableCell>
-                     <DeleteModalUser idUser={user.id} name={user.name ?? ""} />
+                      <DeleteModalUser
+                        idUser={user.id}
+                        name={user.name ?? ""}
+                      />
                     </TableCell>
                     <TableCell>
-                    <EditModalUser name={user.name ?? ""} email={user.email} role={user.role} password="" wardId={user.ward?.id ?? ""} stakeId={user.Stake?.id ?? ""} />
+                      <EditModalUser
+                        name={user.name ?? ""}
+                        email={user.email}
+                        role={user.role}
+                        password=""
+                        wardId={user.ward?.id ?? ""}
+                        stakeId={user.Stake?.id ?? ""}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
