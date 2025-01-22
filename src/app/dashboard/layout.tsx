@@ -1,14 +1,11 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PropsWithChildren } from "react";
 import { Sidebar } from "./_components/sidebar/sidebar";
-import { getSession } from "./action";
 import UserLoggedIn from "./_components/UserloggedIn/UserloggedIn";
 
 export default async function Layout({ children }: PropsWithChildren) {
-  const session = await getSession();
   const user = await UserLoggedIn();
 
-  console.log(session);
   return (
     <SidebarProvider>
       <div className="flex w-full h-screen bg-gray-100">
