@@ -33,6 +33,7 @@ import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { GetStake } from "../../stake/actions";
+import UserLoggedIn from "../../_components/UserloggedIn/UserloggedIn";
 
 interface stakeProps {
   id: string;
@@ -71,7 +72,8 @@ export default function ModalFormWard() {
   useEffect(() => {
     async function GetStakeWard() {
       try {
-        const stake = await GetStake();
+        const { Stake } = await UserLoggedIn();
+        const stake = await GetStake(Stake?.id);
         if (!stake) {
           throw new Error("GetStake returned null");
         }
@@ -89,7 +91,9 @@ export default function ModalFormWard() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">Adicionar nova ala</Button>
+        <Button className="bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
+          Adicionar nova ala
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[360px]">
         <DialogHeader>
@@ -123,7 +127,7 @@ export default function ModalFormWard() {
                 name="stakeId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Ala</FormLabel>
+                    <FormLabel>Estaca</FormLabel>
                     <Select onValueChange={field.onChange} required>
                       <FormControl>
                         <SelectTrigger>
@@ -143,7 +147,11 @@ export default function ModalFormWard() {
                 )}
               />
               <DialogFooter>
-                <Button type="submit" disabled={loading} className="w-20 bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="w-20 bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out"
+                >
                   {loading ? (
                     <Loader className="w-4 h-4 animate-spin" />
                   ) : (
