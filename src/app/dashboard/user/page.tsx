@@ -26,7 +26,7 @@ export default async function User() {
   return (
     <div className="max-w-[1200px] mx-auto">
       <div className="flex justify-between">
-        <Header title={`Membros da ${users[0]?.ward?.name || "Ala"}`} />
+        <Header title="Membros da Estaca" />
         <RegisterForm />
       </div>
       <Card>
