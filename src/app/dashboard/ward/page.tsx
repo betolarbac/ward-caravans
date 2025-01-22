@@ -13,10 +13,15 @@ import { getWards } from "./action";
 import DeleteModalWard from "./_components/deleteModalWard";
 import EditModalWard from "./_components/editModalWard";
 import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
+import { redirect } from "next/navigation";
 
 export default async function Ward() {
-  const { Stake } = await UserLoggedIn();
+  const { Stake, role } = await UserLoggedIn();
   const ward = await getWards(undefined, Stake?.id);
+
+  if (role === "ward") {
+    redirect("/dashboard");
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto">

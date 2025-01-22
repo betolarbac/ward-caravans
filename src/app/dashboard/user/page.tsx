@@ -13,10 +13,15 @@ import { GetUser } from "./actions";
 import DeleteModalUser from "./_components/DeleteModalUser";
 import EditModalUser from "./_components/EditModalUser";
 import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
+import { redirect } from "next/navigation";
 
 export default async function User() {
-  const { Stake } = await UserLoggedIn();
+  const { Stake, role } = await UserLoggedIn();
   const users = await GetUser(Stake?.id);
+
+  if (role === "ward") {
+    redirect("/dashboard");
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto">
