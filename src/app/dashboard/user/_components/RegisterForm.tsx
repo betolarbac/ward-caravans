@@ -49,6 +49,7 @@ export default function RegisterForm() {
   const [open, setOpen] = useState(false);
   const [wards, setWards] = useState<Ward[]>([]);
   const [stake, setStake] = useState<Stake[]>([]);
+  const [roleUser, setRoleUser] = useState("");
   const router = useRouter();
 
   const form = useForm<RegisterFormData>({
@@ -64,14 +65,18 @@ export default function RegisterForm() {
   useEffect(() => {
     async function fetchWards() {
       try {
-        const { Stake } = await UserLoggedIn();
-        const wardsData = await getWards(undefined, Stake?.id);
+        const { Stake, role, ward } = await UserLoggedIn();
+        const wardsData =
+          role === "ward"
+            ? await getWards(ward?.id, undefined)
+            : await getWards(undefined, Stake?.id);
         const formattedWards = wardsData.map((ward) => ({
           id: ward.id,
           name: ward.name,
           createdAt: new Date(),
         }));
         setWards(formattedWards);
+        setRoleUser(role);
       } catch (error) {
         console.error("Erro ao buscar wards:", error);
       }
@@ -240,8 +245,14 @@ export default function RegisterForm() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="ward">Ala</SelectItem>
-                          <SelectItem value="stake">Estaca</SelectItem>
+                          {roleUser === "ward" ? (
+                            <SelectItem value="ward">Ala</SelectItem>
+                          ) : (
+                            <>
+                              <SelectItem value="ward">Ala</SelectItem>
+                              <SelectItem value="stake">Estaca</SelectItem>
+                            </>
+                          )}
                         </SelectContent>
                       </Select>
                       <FormMessage />
