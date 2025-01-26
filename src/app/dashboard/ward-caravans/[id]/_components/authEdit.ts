@@ -9,7 +9,5 @@ export default async function AuthEdit(id: string) {
     (role === "ward" && ward?.id === caravansMember?.wardId) ||
     (role === "stake" && Stake?.id === caravansMember?.ward?.stakeId);
 
-    console.log(ward?.id, caravansMember?.id)
-
-    return {authEdit, caravansMember}
+  return { authEdit, caravansMember };
 }
