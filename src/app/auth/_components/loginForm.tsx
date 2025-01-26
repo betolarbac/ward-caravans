@@ -15,14 +15,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Loader } from "lucide-react";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
-  const route = useRouter();
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
@@ -39,14 +37,13 @@ export default function LoginForm() {
         email: data.email,
         password: data.password,
         redirect: false,
+        callbackUrl: "/dashboard",
       });
 
       if (result?.error) {
         alert(result.error);
         return;
       }
-
-      route.push("/dashboard");
     } catch (error) {
       alert(error || "Ocorreu um erro ao fazer login");
     } finally {
@@ -63,7 +60,7 @@ export default function LoginForm() {
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Bem-vindo de volta</h1>
                 <p className="text-balance text-muted-foreground">
-                Faça login em sua conta
+                  Faça login em sua conta
                 </p>
               </div>
 
@@ -100,8 +97,16 @@ export default function LoginForm() {
                     )}
                   />
 
-                  <Button type="submit" disabled={loading} className="w-full bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out">
-                    {loading ? <Loader className="w-4 h-4 animate-spin" /> : "Entrar"}
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-[#167b9c] hover:bg-[#0f5b7c] transition-colors duration-300 ease-in-out"
+                  >
+                    {loading ? (
+                      <Loader className="w-4 h-4 animate-spin" />
+                    ) : (
+                      "Entrar"
+                    )}
                   </Button>
                 </form>
               </Form>
