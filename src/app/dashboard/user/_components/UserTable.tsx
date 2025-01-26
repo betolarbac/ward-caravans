@@ -92,7 +92,6 @@ export function UserTable({ data }: UserTablePropsId) {
       enableHiding: false,
       cell: ({ row }: { row: { original: UserWithId } }) => {
         const data = row.original;
-        console.log(data);
         return <DeleteModalUser idUser={data.id} name={data.name ?? ""} />;
       },
     },
