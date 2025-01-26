@@ -68,7 +68,9 @@ export function WardTablet({ data }: WardTabletProps) {
         const data = row.original;
         return (
           <Link href={`/dashboard/ward-caravans/${data.id}`}>
-            <div className="font-medium py-4">{row.getValue("name")}</div>
+            <div className="capitalize font-medium px-2 py-4">
+              {row.getValue("name")}
+            </div>
           </Link>
         );
       },
