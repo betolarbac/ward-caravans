@@ -6,14 +6,10 @@ import AuthEdit from "./_components/authEdit";
 import ExportExcel from "./_components/exportExcel";
 import { WardTableUser } from "./_components/wardTableUser";
 
-interface CaravanPageProps {
-  params: {
-    id: string;
-  };
-}
+type tParams = Promise<{ id: string }>;
 
-export default async function CaravansPage({ params }: CaravanPageProps) {
-  const { id } = await params;
+export default async function CaravansPage(props: { params: tParams }) {
+  const { id } = await props.params;
   const { ward } = await UserLoggedIn();
 
   const { authEdit, caravansMember } = await AuthEdit(id);
