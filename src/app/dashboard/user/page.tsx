@@ -1,19 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
 import Header from "../_components/header";
 import RegisterForm from "./_components/RegisterForm";
 import { GetUser } from "./actions";
-import DeleteModalUser from "./_components/DeleteModalUser";
-import EditModalUser from "./_components/EditModalUser";
 import UserLoggedIn from "../_components/UserloggedIn/UserloggedIn";
 import { redirect } from "next/navigation";
+import { UserTable } from "./_components/UserTable";
 
 export default async function User() {
   const { Stake, role } = await UserLoggedIn();
@@ -31,56 +22,17 @@ export default async function User() {
       </div>
       <Card>
         <CardContent className="py-4">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Estaca</TableHead>
-                <TableHead>Ala</TableHead>
-                <TableHead>Função</TableHead>
-                <TableHead>Deletar</TableHead>
-                <TableHead>Editar</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} className="h-24 text-center">
-                    Nenhum membro Cadastrado.
-                  </TableCell>
-                </TableRow>
-              ) : (
-                users.map((user) => (
-                  <TableRow className="" key={user.id}>
-                    <TableCell className="font-medium py-4">
-                      {user.name}
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.Stake?.name}</TableCell>
-                    <TableCell>{user.ward?.name}</TableCell>
-                    <TableCell>{user.role}</TableCell>
-                    <TableCell>
-                      <DeleteModalUser
-                        idUser={user.id}
-                        name={user.name ?? ""}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <EditModalUser
-                        name={user.name ?? ""}
-                        email={user.email}
-                        role={user.role}
-                        password=""
-                        wardId={user.ward?.id ?? ""}
-                        stakeId={user.Stake?.id ?? ""}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+          <UserTable
+            data={users.map((user) => ({
+              id: user.id,
+              name: user.name ?? undefined,
+              email: user.email,
+              stakeId: user.Stake?.name ?? "",
+              wardId: user.ward?.id ?? "",
+              role: user.role,
+              password: "",
+            }))}
+          />
         </CardContent>
       </Card>
     </div>
