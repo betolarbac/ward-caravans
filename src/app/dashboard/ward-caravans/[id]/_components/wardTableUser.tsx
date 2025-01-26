@@ -36,6 +36,7 @@ import { CaravansMemberProps } from "@/lib/validators";
 import CaravansMemberDelete from "./deleteMemberCaravans";
 import EditMemberCaravans from "./EditMemberCaravans";
 import formatCPF from "./formatCpf";
+import AuthEdit from "./authEdit";
 
 type WardTabletProps = {
   data: CaravansMemberProps[];
@@ -49,6 +50,21 @@ export function WardTableUser({ data }: WardTabletProps) {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [authEditUser, setAuthEditUser] = React.useState(false);
+
+  React.useEffect(() => {
+    async function fetchAuthEdit() {
+      if (data.length > 0 && data[0].caravansId) {
+        try {
+          const { authEdit } = await AuthEdit(data[0].caravansId);
+          setAuthEditUser(authEdit);
+        } catch (error) {
+          console.error("Erro", error);
+        }
+      }
+    }
+    fetchAuthEdit();
+  }, [authEditUser, data]);
 
   const columns: ColumnDef<CaravansMemberProps>[] = [
     {
@@ -66,7 +82,7 @@ export function WardTableUser({ data }: WardTabletProps) {
       },
 
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("name")}</div>
+        <div className="capitalize px-2 py-4">{row.getValue("name")}</div>
       ),
     },
 
@@ -104,12 +120,12 @@ export function WardTableUser({ data }: WardTabletProps) {
       cell: ({ row }) => {
         const data = row.original;
 
-        return (
+        return authEditUser ? (
           <CaravansMemberDelete
             idMemberCaravans={data.id as string}
             name={data.name || ""}
           />
-        );
+        ) : null;
       },
     },
     {
@@ -118,7 +134,7 @@ export function WardTableUser({ data }: WardTabletProps) {
       enableHiding: false,
       cell: ({ row }) => {
         const data = row.original;
-        return (
+        return authEditUser ? (
           <EditMemberCaravans
             id={data.id}
             caravansId={data.caravansId}
@@ -127,7 +143,7 @@ export function WardTableUser({ data }: WardTabletProps) {
             cpf={data.cpf}
             pay={data.pay}
           />
-        );
+        ) : null;
       },
     },
   ];
