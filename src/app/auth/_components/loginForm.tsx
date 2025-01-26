@@ -18,10 +18,11 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const form = useForm<LoginFormData>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -48,6 +49,7 @@ export default function LoginForm() {
       alert(error || "Ocorreu um erro ao fazer login");
     } finally {
       setLoading(false);
+      router.refresh();
     }
   }
 
