@@ -48,8 +48,8 @@ export default function LoginForm() {
     } catch (error) {
       alert(error || "Ocorreu um erro ao fazer login");
     } finally {
-      setLoading(false);
       router.refresh();
+      setLoading(false);
     }
   }
 
