@@ -1,27 +1,22 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     const {
       nextUrl: { searchParams },
-    } = req;
+    } = _req;
 
-    const caravans = await prisma.caravans.findMany({
+    const caravan = await prisma.caravans.findUnique({
       where: {
-        active: true,
-
-        ward: {
-          stakeId: searchParams.get("stakeId") ?? "",
-        },
+        id: searchParams.get("id") ?? "",
       },
       include: {
         Member: true,
-        ward: true,
       },
     });
 
-    return NextResponse.json(caravans);
+    return NextResponse.json(caravan);
   } catch (error) {
     if (error instanceof Error) {
       console.log("Erro:", error.message);
